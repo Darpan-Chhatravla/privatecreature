@@ -1,0 +1,14 @@
+<div class="selectSearch selectBranch" id="city_dd">
+   <%= select_tag "city_name", options_for_select(city_dd), id: "CityName", prompt: "-- Select City --", disabled: city_dd.blank? %>
+</div>
+
+<script type="text/javascript">
+  $('#CityName').on('change', function(){
+    var value = this.value;
+    if(value != null && value != ''){
+      load_branch_names(value, 'branch', $("#BankName").val());
+    }else{
+      $("#BranchName").attr('disabled');
+    };
+  });
+</script>

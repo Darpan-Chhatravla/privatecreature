@@ -1,0 +1,30 @@
+<div style="display: block;" class="drop-down-show" id="ifsc_deails">
+   <div class="main-contentz">
+      <div class="table-container">
+         <table style="border: 0;">
+            <tbody>
+               <tr>
+                  <th style="width: 33%;">Branch Name</th>
+                  <td style="text-align: left;"><%= ifsc.try(:bank) || '-----' %></td>
+               </tr>
+               <tr>
+                  <th style="width: 17%;">IFSC Code</th>
+                  <td style="text-align: left;"><%= ifsc.try(:ifsc_number) || '-----' %></td>
+               </tr>
+               <tr>
+                  <th style="width: 17%;">Address</th>
+                  <td style="text-align: left;"><%= ifsc.try(:address) || '-----' %></td>
+               </tr>
+               <tr>
+                  <th style="width: 17%;">City</th>
+                  <td style="text-align: left;"><%= ifsc.try(:city) || '-----' %></td>
+               </tr>
+               <tr>
+                  <th style="width: 17%;">State</th>
+                  <td style="text-align: left;"><%= ifsc.try(:state) || '-----' %></td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>

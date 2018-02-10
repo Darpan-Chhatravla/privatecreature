@@ -1,0 +1,147 @@
+<div class="middleContainer clearfix">
+   <div class="leftColumnContainer" data-content="See More">
+      <ul data-content="See More">
+         <li>
+            <a href="/">IFSC Codes<span>›</span></a>
+         </li>
+         <li>
+            <a class="selected" href="/micr_codes">MICR Codes<span>›</span></a>
+         </li>
+      </ul>
+   </div>
+   <div class="rightColumnContainer">
+      <h1>MICR Code Finder</h1>
+      <br>
+      <p class="checkingClass" style="display: block; color: #f5821f; margin-top: 7px"></p>
+      <p>&nbsp;</p>
+
+      <%= form_tag('/micr_codes/search_code', remote: true, method: :get, class: "ifsc-form clearfix", id: "auto_search_form") do%>
+         <%= hidden_field_tag 'search_id', @search_id, id: "hfield", name: :search_id %>
+         <input type="select" style="box-shadow: none; border-radius: 0px; border-color: #e5e6e7; width: 311px;" class="typeahead tt-query ui-autocomplete-input" value="<%= IfscCode.find_by_id(@search_id).try(:auto_large_name) unless @search_id.blank? %>" autocomplete="off" id="BookTypeahead" data-url="/micr_codes/auto_complete" data-type="ifsc_codes" data-id="hfield" placeholder="Search your Branch" required="required"/>
+      <% end %>
+      <p>&nbsp;</p>
+      <p>
+         <b>Or</b> Select your State, City and branch to MICR code.
+      </p>
+      <br>
+      <%= form_tag('/ifsc_codes/search_code', remote: true, method: :get, class: "ifsc-form clearfix", id: "auto_search_form_dd") do %>
+         <div class="selectSearch fl mr20 selectState">
+            <%= select_tag "bank_name", options_for_select(IfscGlobal::BANK_LIST, ""), prompt: "-- Select Bank --", id: "BankName" %>
+         </div>
+
+         <div class="selectSearch fl mr20 selectState" id="state_dd">
+            <%= select_tag "state_name", options_for_select([]), id: "StateName",  prompt: "-- Select State --", disabled: true %>
+         </div>
+
+         <div class="selectSearch fl mr20 selectState" id="city_dd">
+            <%= select_tag "city_name", options_for_select([]), id: "CityName", prompt: "-- Select City --", disabled: true %>
+         </div>
+
+         <div class="selectSearch selectBranch" id="branch_dd">
+            <%= select_tag "branch_name", options_for_select([]), id: "BranchName", prompt: "-- Select Branch --", disabled: true %>
+         </div>
+      <% end %>
+
+      <div class="clearfix">&nbsp;</div>
+      <div id="scontent"></div>
+      <div style="display: none;" id="hidden_div"></div>
+      <div class="clearfix"></div>
+      <div style="display: block;" class="drop-down-show" id="ifsc_deails">
+         <div class="main-contentz">
+            <div class="table-container">
+               <table style="border: 0;">
+                  <tbody>
+                     <tr>
+                        <th style="width: 33%;">Branch Name</th>
+                        <td style="text-align: left;">-----</td>
+                     </tr>
+                     <tr>
+                        <th style="width: 17%;">MICR Code</th>
+                        <td style="text-align: left;">-----</td>
+                     </tr>
+                     <tr>
+                        <th style="width: 17%;">Address</th>
+                        <td style="text-align: left;">-----</td>
+                     </tr>
+                     <tr>
+                        <th style="width: 17%;">City</th>
+                        <td style="text-align: left;">-----</td>
+                     </tr>
+                     <tr>
+                        <th style="width: 17%;">State</th>
+                        <td style="text-align: left;">-----</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </div>
+      <hr>
+      <h2>What is MICR code?</h2>
+      <p>MICR code is a character-recognition technology used mainly by the banking industry to ease the processing and clearance of cheques and other documents. ... The technology allows MICR readers to scan and read the information directly into a data-collection device.</p>
+   </div>
+</div>
+
+<script type="text/javascript">
+   $('#BookTypeahead').typeahead([{
+     name: $('#BookTypeahead').attr("data-type"),
+     valueKey: 'branch_name',
+     remote: $('.typeahead').attr("data-url")+ '.json?term=%QUERY',
+     limit: 10
+   }]).on('typeahead:selected', onSelected);
+
+   function onSelected($e, datum) {
+     var hfield   = document.getElementById($(this).attr("data-id"));
+     hfield.value = datum.id;
+     $('#auto_search_form').submit();
+   };
+
+   // Load Branch from Bank
+  $('#BankName').on('change', function(){
+    var value = this.value;
+    if(value != null && value != ''){
+      load_ifsc_data_from_drop_down();
+      load_branch_names(value, 'state', '');
+    }else{
+      $("#BranchName").attr('disabled');
+    };
+  });
+
+  // Branch Name
+  function load_branch_names(value, look_for, value1){
+    var request = "/micr_codes/find_attribute?term="
+      + value + "&look_for=" + look_for + "&bank=" + value1;
+
+     var aj = $.ajax({
+         url: request,
+         type: 'get',
+         data: $(this).serialize()
+     }).done(function (data) {
+        console.log('AJAX request has sucess');
+     }).fail(function (data) {
+        console.log('AJAX request has FAILED');
+     });
+  };
+
+  // Load Details from dd
+  function load_ifsc_data_from_drop_down(){
+    var bank   = $("#BankName").val();
+    var state  = $("#StateName").val();
+    var city   = $("#CityName").val();
+    var branch = $("#BranchName").val();
+    if (bank !== null && state !== null && city !== null && branch !== null && bank !== "" && state !== "" && city !== "" && branch !== "") {
+      var request = "/micr_codes/search_code?bank="
+        + bank + "&state=" + state + "&city=" + city + "&branch=" + branch +"&dropdown=true";
+
+      var aj = $.ajax({
+        url: request,
+        type: 'get',
+        data: $(this).serialize()
+      }).done(function (data) {
+        console.log('AJAX request has sucess');
+      }).fail(function (data) {
+        console.log('AJAX request has FAILED');
+      });
+    };
+  };
+</script>

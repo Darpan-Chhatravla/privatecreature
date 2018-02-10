@@ -1,0 +1,15 @@
+<div class="selectSearch fl mr20 selectState" id="branch_dd">
+   <%= select_tag "branch_name", options_for_select(branch_dd), id: "BranchName", prompt: "-- Select Branch --", disabled: branch_dd.blank? %>
+</div>
+
+<script type="text/javascript">
+  $('#BranchName').on('change', function(){
+    var value = this.value;
+    if(value != null && value != ''){
+      load_ifsc_data_from_drop_down();
+    }else{
+      load_ifsc_data_from_drop_down();
+      $("#BranchName").attr('disabled');
+    };
+  });
+</script>

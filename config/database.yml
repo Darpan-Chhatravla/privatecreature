@@ -1,0 +1,24 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: root
+  password: root
+  socket: /var/run/mysqld/mysqld.sock
+
+development:
+  <<: *default
+  database: ifsc_development
+
+test:
+  <<: *default
+  database: ifsc_test
+
+production:
+  adapter: <%= ENV['VIDESIGNS_DATABASE_ADAPTER'] %>
+  encoding: <%= ENV['VIDESIGNS_DATABASE_ENCODING'] %>
+  pool: <%= ENV['VIDESIGNS_DATABASE_POOL'] %>
+  database: <%= ENV['VIDESIGNS_DATABASE'] %>
+  username: <%= ENV['VIDESIGNS_DATABASE_USERNAME'] %>
+  password: <%= ENV['VIDESIGNS_DATABASE_PASSWORD'] %>
+  host: <%= ENV['VIDESIGNS_DATABASE_HOST'] %>

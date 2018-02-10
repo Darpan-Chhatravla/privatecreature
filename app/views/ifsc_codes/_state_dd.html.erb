@@ -1,0 +1,14 @@
+<div class="selectSearch fl mr20 selectState" id="state_dd">
+   <%= select_tag "state_name", options_for_select(state_dd), id: "StateName",  prompt: "-- Select State --", disabled: state_dd.blank? %>
+</div>
+
+<script type="text/javascript">
+	 $('#StateName').on('change', function(){
+    var value = this.value;
+    if(value != null && value != ''){
+      load_branch_names(value, 'city', $("#BankName").val());
+    }else{
+      $("#CityName").attr('disabled');
+    };
+  });
+</script>

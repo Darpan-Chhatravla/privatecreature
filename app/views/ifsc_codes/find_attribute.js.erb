@@ -1,0 +1,8 @@
+<% case @div_id %>
+<% when "branch_dd"%>
+	$("#branch_dd").html("<%= raw escape_javascript(render(partial: 'branch_dd', locals: {branch_dd: @branch_dd})) %>");
+<% when "state_dd" %>
+	$("#state_dd").html("<%= raw escape_javascript(render(partial: 'state_dd', locals: {state_dd: @state_dd})) %>");
+<% when "city_dd" %>
+	$("#city_dd").html("<%= raw escape_javascript(render(partial: 'city_dd', locals: {city_dd: @city_dd})) %>");
+<% end %>

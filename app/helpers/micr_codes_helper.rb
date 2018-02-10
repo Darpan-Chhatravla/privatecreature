@@ -1,0 +1,2 @@
+module MicrCodesHelper
+end
