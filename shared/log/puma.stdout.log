@@ -1,0 +1,7 @@
+=== puma startup: 2018-02-10 20:55:30 +0530 ===
+[10835] * Starting control server on unix:///tmp/puma-status-1518276330331-10835
+[10835] - Worker 1 (pid: 10847) booted, phase: 0
+[10835] - Worker 0 (pid: 10843) booted, phase: 0
+[10835] - Gracefully shutting down workers...
+[10835] === puma shutdown: 2018-02-10 20:55:51 +0530 ===
+[10835] - Goodbye!
