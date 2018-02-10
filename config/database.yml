@@ -15,10 +15,10 @@ test:
   database: ifsc_test
 
 production:
-  adapter: <%= ENV['VIDESIGNS_DATABASE_ADAPTER'] %>
-  encoding: <%= ENV['VIDESIGNS_DATABASE_ENCODING'] %>
-  pool: <%= ENV['VIDESIGNS_DATABASE_POOL'] %>
-  database: <%= ENV['VIDESIGNS_DATABASE'] %>
-  username: <%= ENV['VIDESIGNS_DATABASE_USERNAME'] %>
-  password: <%= ENV['VIDESIGNS_DATABASE_PASSWORD'] %>
-  host: <%= ENV['VIDESIGNS_DATABASE_HOST'] %>
+  adapter: mysql2
+  encoding: utf8
+  pool: 5
+  database: ifsc_production
+  username: root
+  password: Goplum2018
+  host: localhost

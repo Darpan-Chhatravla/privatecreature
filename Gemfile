@@ -7,7 +7,6 @@ end
 
 
 gem 'rails', '~> 5.1.3'
-# gem 'pg', '~> 0.18.4'
 gem 'mysql2', '>= 0.3.18', '< 0.5'
 gem 'puma', '~> 3.7'
 gem 'sass-rails', '~> 5.0'
@@ -22,6 +21,11 @@ gem 'bootstrap-typeahead-rails'
 gem 'dotenv-rails'
 # gem 'bundler', '~> 1.15', '>= 1.15.4'
 
+gem 'capistrano',         require: false
+gem 'capistrano-rvm',     require: false
+gem 'capistrano-rails',   require: false
+gem 'capistrano-bundler', require: false
+gem 'capistrano3-puma',   require: false
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry'
