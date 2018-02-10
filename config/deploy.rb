@@ -1,14 +1,10 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.10.1"
-
-set :application, "privatecreature"
-set :repo_url, "git@example.com:me/my_repo.git"
-
 # Change these
 server '139.59.82.166', roles: [:web, :app, :db], primary: true
 set :repo_url,        'git@github.com:Darpan-Chhatravla/privatecreature.git'
 set :application,     'privatecreature'
-set :user,            'darpan'
+set :user,            'root'
 set :puma_threads,    [4, 16]
 set :puma_workers,    0
 
